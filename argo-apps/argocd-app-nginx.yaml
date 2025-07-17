@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/rizwan2017/northbay-helm.git
     targetRevision: main
-    path: argo-apps
+    path: charts
     helm:
       valueFiles:
         - values.yaml

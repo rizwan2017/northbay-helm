@@ -51,4 +51,4 @@ jobs:
     - name: Apply Argo CD Application
       if: github.ref == 'refs/heads/main'
       run: |
-        kubectl apply -f argo-apps/nginx.yaml -n argocd
+        kubectl apply -f argo-apps/argocd-app-nginx.yaml -n argocd
