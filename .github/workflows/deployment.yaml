@@ -21,7 +21,7 @@ jobs:
     - name: Validate ArgoCD Application YAML
       run: |
         echo "Validating ArgoCD manifest..."
-        yamllint argo-apps/nginx.yaml
+        yamllint argo-apps/argocd-app-nginx.yaml
 
     - name: Skip apply on pull request
       if: github.event_name == 'pull_request'
