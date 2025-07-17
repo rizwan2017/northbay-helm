@@ -4,11 +4,11 @@ kind: Application
 metadata:
   name: nginx-app
   namespace: argocd
-  annotations:
-    argocd-image-updater.argoproj.io/image-list: >
-      northbay-nginx=northbayacr.azurecr.io/northbay-nginx
-    argocd-image-updater.argoproj.io/northbay-nginx.update-strategy: latest
-    argocd-image-updater.argoproj.io/northbay-nginx.force-update: "true"
+  # annotations:
+  #   argocd-image-updater.argoproj.io/image-list: >
+  #     northbay-nginx=northbayacr.azurecr.io/northbay-nginx
+  #   argocd-image-updater.argoproj.io/northbay-nginx.update-strategy: latest
+  #   argocd-image-updater.argoproj.io/northbay-nginx.force-update: "true"
 spec:
   project: default
   source:
