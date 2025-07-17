@@ -1,0 +1,54 @@
+name: ArgoCD Deploy argo apps to AKS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy or Validate ArgoCD Application
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+
+    - name: Validate ArgoCD Application YAML
+      run: |
+        echo "Validating ArgoCD manifest..."
+        yamllint argo-apps/nginx.yaml
+
+    - name: Skip apply on pull request
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "Skipping apply step on PR"
+
+    - name: Set up kubectl
+      if: github.ref == 'refs/heads/main'
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+
+    - name: Azure Login
+      if: github.ref == 'refs/heads/main'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set AKS context
+      if: github.ref == 'refs/heads/main'
+      run: |
+        az aks get-credentials \
+          --resource-group northbay-resouce-group \
+          --name northbay-aks-cluster \
+          --overwrite-existing
+
+    - name: Apply Argo CD Application
+      if: github.ref == 'refs/heads/main'
+      run: |
+        kubectl apply -f argo-apps/nginx.yaml -n argocd

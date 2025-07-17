@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/rizwan2017/northbay-helm.git
+    targetRevision: main
+    path: apps
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://northbay-aks-dns-x19y8y76.hcp.eastus.azmk8s.io:443
+    namespace: nginx
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
