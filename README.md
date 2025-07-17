@@ -1,2 +1,0 @@
-# northbay-helm
-northbay-helm
