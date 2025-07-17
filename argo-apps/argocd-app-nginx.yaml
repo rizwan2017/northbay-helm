@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/rizwan2017/northbay-helm.git
     targetRevision: main
-    path: charts
+    path: .
     helm:
       valueFiles:
         - values.yaml
